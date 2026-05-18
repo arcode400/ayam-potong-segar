@@ -21,6 +21,7 @@ export function buildOrderWAMessage(o: {
   shippingLabel?: string | null;
   shippingCost?: number;
   uniqueCode?: number;
+  proofUrl?: string | null;
   total: number;
   notes?: string;
 }) {
@@ -41,6 +42,7 @@ export function buildOrderWAMessage(o: {
     `*Total Transfer : ${rupiah(o.total)}*`,
     "",
     o.notes ? `Catatan: ${o.notes}` : "",
+    o.proofUrl ? `\n📎 Bukti transfer: ${o.proofUrl}` : "",
     "",
     "⚠️ Mohon transfer PERSIS nominal di atas (termasuk kode unik) agar pesanan langsung diverifikasi.",
     "Terima kasih 🙏",

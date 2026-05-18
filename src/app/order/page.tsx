@@ -133,6 +133,10 @@ export default function OrderPage() {
           ? "Diantar Toko (gratis ongkir)"
           : "Ambil Sendiri di Toko";
 
+      const proofPublicUrl = proofUrl
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/payment-proofs/${proofUrl}`
+        : null;
+
       const msg = buildOrderWAMessage({
         name,
         phone: normalizePhoneID(phone),
@@ -142,6 +146,7 @@ export default function OrderPage() {
         shippingLabel,
         shippingCost,
         uniqueCode,
+        proofUrl: proofPublicUrl,
         total,
         notes,
       });
