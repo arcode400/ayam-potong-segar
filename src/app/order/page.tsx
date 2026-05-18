@@ -37,6 +37,7 @@ export default function OrderPage() {
   const [error, setError] = useState<string | null>(null);
   const [uniqueCode] = useState(() => makeUniqueCode());
   const [shippingArea, setShippingArea] = useState<string>("");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   // Expand into flat items list (one per cut for cut-products, one for others)
   const items = useMemo(() => {
@@ -88,10 +89,15 @@ export default function OrderPage() {
     return null;
   }
 
-  async function submit() {
+  function preSubmit() {
     setError(null);
     const v = validate();
     if (v) { setError(v); return; }
+    setShowConfirm(true);
+  }
+
+  async function submit() {
+    setShowConfirm(false);
     setSubmitting(true);
     try {
       const supa = createClient();
@@ -344,12 +350,46 @@ export default function OrderPage() {
 
       {error && <div className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</div>}
 
-      <button onClick={submit} disabled={submitting} className="btn-primary mt-6 w-full">
+      <button onClick={preSubmit} disabled={submitting} className="btn-primary mt-6 w-full">
         <MessageCircle size={18}/> {submitting ? "Memproses..." : "Checkout & Kirim ke WhatsApp"}
       </button>
 
       {done && (
         <p className="mt-3 text-center text-sm">Jika WhatsApp tidak terbuka otomatis, <a className="text-brand-700 underline" href={done}>klik di sini</a>.</p>
+      )}
+
+      {showConfirm && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white p-5">
+            <div className="flex items-center gap-2 text-brand-700">
+              <AlertTriangle size={20}/>
+              <h3 className="text-lg font-bold">Konfirmasi Nomor WhatsApp</h3>
+            </div>
+            <p className="mt-1 text-sm text-neutral-600">
+              Pastikan nomor di bawah ini <b>BENAR & AKTIF</b>. Pak Sumarso akan menghubungi nomor ini untuk konfirmasi pesanan.
+            </p>
+
+            <div className="mt-4 rounded-xl bg-brand-50 p-4 text-center">
+              <div className="text-xs text-neutral-500">Nomor WhatsApp Anda:</div>
+              <div className="mt-1 text-2xl font-extrabold tracking-wider text-brand-700">
+                +{normalizePhoneID(phone)}
+              </div>
+            </div>
+
+            <div className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900">
+              ⚠️ Kalau nomor salah, pesanan tidak akan bisa diproses. Pastikan kamu bisa terima WA di nomor ini sekarang.
+            </div>
+
+            <div className="mt-5 flex gap-2">
+              <button onClick={() => setShowConfirm(false)} className="btn-outline flex-1">
+                Perbaiki Nomor
+              </button>
+              <button onClick={submit} className="btn-primary flex-1">
+                Ya, Benar — Lanjut
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
