@@ -35,7 +35,7 @@ export default function HomePage() {
             <div className="mt-6 grid grid-cols-3 gap-3 text-center text-xs text-neutral-600">
               <div className="card"><Truck className="mx-auto mb-1 text-brand-600" size={18}/>Antar Hari Sama</div>
               <div className="card"><ShieldCheck className="mx-auto mb-1 text-brand-600" size={18}/>Segar & Higienis</div>
-              <div className="card"><MapPin className="mx-auto mb-1 text-brand-600" size={18}/>Depok • Bogor • Jaksel</div>
+              <div className="card"><MapPin className="mx-auto mb-1 text-brand-600" size={18}/>Pengiriman Sampai Rumah</div>
             </div>
           </div>
 
