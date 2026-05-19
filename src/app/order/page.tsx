@@ -195,6 +195,8 @@ export default function OrderPage() {
         <div className="grid gap-3 sm:grid-cols-2">
           {PRODUCTS.filter((p) => !p.disabled).map((p) => {
             const productTotal = sumCut(qty[p.key]);
+            const nonAtiNow = items.reduce((s, i) => s + (i.key === "ati_ampela" ? 0 : i.qty), 0);
+            const atiShortfall = p.key === "ati_ampela" && productTotal > 0 && nonAtiNow === 0 && productTotal < 35;
             return (
               <div key={p.key} className="card">
                 <div className="flex items-center gap-3">
@@ -229,6 +231,11 @@ export default function OrderPage() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                )}
+                {atiShortfall && (
+                  <div className="mt-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900">
+                    ⚠️ Minimum <b>35 pasang</b> kalau pesan Ati Ampela saja. Kurang <b>{35 - productTotal} pasang</b> lagi — atau tambah produk lain biar bisa pesan berapapun.
                   </div>
                 )}
               </div>
@@ -301,7 +308,7 @@ export default function OrderPage() {
       <section className="mt-6 grid gap-3">
         <h2 className="text-lg font-semibold">Pembayaran</h2>
         <div className="card text-sm">
-          <div>Transfer ke <b>BCA 5000345808</b> a.n. <b>{STORE.name}</b></div>
+          <div>Transfer ke <b>BCA 5000727859</b> a.n. <b>SUMIYATI</b></div>
           {subtotal > 0 && (
             <div className="mt-3 rounded-xl bg-brand-50 p-3">
               <div className="text-xs text-neutral-600">Jumlah yang harus ditransfer (TEPAT):</div>
