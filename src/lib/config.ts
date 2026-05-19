@@ -6,7 +6,7 @@ export const STORE = {
   address: "Jl. Sunter Karya Utara II No.14, RT.14/RW.13, Sunter Agung, Kec. Tj. Priok, Jakarta Utara, DKI Jakarta 14350",
 };
 
-export type ProductKey = "boiler" | "kampung" | "fillet" | "ceker" | "ati_ampela";
+export type ProductKey = "boiler" | "kampung" | "kalasan" | "fillet" | "ceker" | "ati_ampela";
 
 export const CUT_OPTIONS = ["Utuh", "Potong 4", "Potong 8", "Potong 12"] as const;
 export type CutOption = typeof CUT_OPTIONS[number];
@@ -14,18 +14,21 @@ export type CutOption = typeof CUT_OPTIONS[number];
 export const PRODUCTS: {
   key: ProductKey;
   name: string;
-  unit: "ekor" | "kg";
+  unit: "ekor" | "kg" | "pasang";
   price: number;
   desc: string;
   emoji: string;
   image: string;
   hasCutOption?: boolean;
+  weightInfo?: string;
+  disabled?: boolean;
 }[] = [
-  { key: "boiler",     name: "Ayam Boiler",   unit: "ekor", price: 55000,  desc: "Ayam broiler segar, pilih potongan sesuai selera.", emoji: "🐔", image: "/images/ayam-utuh.png",   hasCutOption: true },
-  { key: "kampung",    name: "Ayam Kampung",  unit: "ekor", price: 100000, desc: "Ayam kampung asli, gurih & sehat.",                 emoji: "🐓", image: "/images/ayam-kampung.png", hasCutOption: true },
-  { key: "fillet",     name: "Fillet Dada",   unit: "kg",   price: 75000,  desc: "Daging dada tanpa tulang.",                         emoji: "🥩", image: "/images/ayam-fillet.png" },
-  { key: "ceker",      name: "Ceker",         unit: "kg",   price: 35000,  desc: "Ceker bersih segar.",                               emoji: "🦶", image: "/images/ceker.png" },
-  { key: "ati_ampela", name: "Ati Ampela",    unit: "kg",   price: 45000,  desc: "Jeroan bersih pilihan.",                            emoji: "🫀", image: "/images/ati-ampela.png" },
+  { key: "boiler",     name: "Ayam Boiler",   unit: "ekor",   price: 45000,  desc: "Ayam broiler segar, pilih potongan sesuai selera.", emoji: "🐔", image: "/images/ayam-utuh.png",    hasCutOption: true, weightInfo: "±1,2 kg/ekor" },
+  { key: "kampung",    name: "Ayam Kampung",  unit: "ekor",   price: 100000, desc: "Ayam kampung asli, gurih & sehat.",                 emoji: "🐓", image: "/images/ayam-kampung.png", hasCutOption: true, weightInfo: "±1 kg/ekor" },
+  { key: "kalasan",    name: "Ayam Kalasan",  unit: "ekor",   price: 45000,  desc: "Ayam muda khas kalasan, daging empuk.",             emoji: "🐤", image: "/images/ayam-utuh.png",    hasCutOption: true, weightInfo: "±750 gr/ekor" },
+  { key: "fillet",     name: "Fillet Dada",   unit: "kg",     price: 65000,  desc: "Daging dada tanpa tulang.",                         emoji: "🥩", image: "/images/ayam-fillet.png" },
+  { key: "ati_ampela", name: "Ati Ampela",    unit: "pasang", price: 2000,   desc: "Jeroan bersih, dijual per pasang.",                 emoji: "🫀", image: "/images/ati-ampela.png" },
+  { key: "ceker",      name: "Ceker",         unit: "kg",     price: 35000,  desc: "Ceker bersih segar.",                               emoji: "🦶", image: "/images/ceker.png", disabled: true },
 ];
 
 export const DELIVERY_AREAS = {

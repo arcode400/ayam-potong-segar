@@ -21,6 +21,7 @@ export default function OrderPage() {
   const [qty, setQty] = useState<Qty>({
     boiler: { ...EMPTY_CUT_QTY },
     kampung: { ...EMPTY_CUT_QTY },
+    kalasan: { ...EMPTY_CUT_QTY },
     fillet: { ...EMPTY_CUT_QTY },
     ceker: { ...EMPTY_CUT_QTY },
     ati_ampela: { ...EMPTY_CUT_QTY },
@@ -42,10 +43,11 @@ export default function OrderPage() {
   // Expand into flat items list (one per cut for cut-products, one for others)
   const items = useMemo(() => {
     const out: {
-      key: ProductKey; name: string; unit: "ekor" | "kg"; price: number;
+      key: ProductKey; name: string; unit: "ekor" | "kg" | "pasang"; price: number;
       cutOption: CutOption | null; qty: number; subtotal: number;
     }[] = [];
     for (const p of PRODUCTS) {
+      if (p.disabled) continue;
       if (p.hasCutOption) {
         for (const c of CUT_OPTIONS) {
           const q = qty[p.key][c];
@@ -63,7 +65,7 @@ export default function OrderPage() {
   const selectedTarif = SHIPPING_TARIFS.find((t) => t.area === shippingArea) || null;
   const shippingCost = selectedTarif?.price ?? 0;
   const total = subtotal > 0 ? subtotal + shippingCost + uniqueCode : 0;
-  const totalEkor = sumCut(qty.boiler) + sumCut(qty.kampung);
+  const totalEkor = sumCut(qty.boiler) + sumCut(qty.kampung) + sumCut(qty.kalasan);
   const totalItems = items.reduce((s, i) => s + i.qty, 0);
 
   const area = address.trim() ? detectArea(address) : null;
@@ -186,7 +188,7 @@ export default function OrderPage() {
       <section className="mt-6">
         <h2 className="mb-3 text-lg font-semibold">Pilih Potongan</h2>
         <div className="grid gap-3 sm:grid-cols-2">
-          {PRODUCTS.map((p) => {
+          {PRODUCTS.filter((p) => !p.disabled).map((p) => {
             const productTotal = sumCut(qty[p.key]);
             return (
               <div key={p.key} className="card">
@@ -196,7 +198,7 @@ export default function OrderPage() {
                   </div>
                   <div className="flex-1">
                     <div className="font-semibold">{p.name}</div>
-                    <div className="text-xs text-neutral-500">{rupiah(p.price)} / {p.unit}</div>
+                    <div className="text-xs text-neutral-500">{rupiah(p.price)} / {p.unit}{p.weightInfo ? ` • ${p.weightInfo}` : ""}</div>
                   </div>
                   {!p.hasCutOption && (
                     <div className="flex items-center gap-2">
