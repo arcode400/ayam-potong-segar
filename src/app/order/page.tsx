@@ -81,6 +81,11 @@ export default function OrderPage() {
     if (!address.trim()) return "Alamat wajib diisi.";
     if (area === "luar") return "Maaf, area belum terjangkau.";
     if (items.length === 0) return "Pilih minimal 1 produk.";
+    const atiQty = sumCut(qty.ati_ampela);
+    const nonAtiQty = items.reduce((s, i) => s + (i.key === "ati_ampela" ? 0 : i.qty), 0);
+    if (atiQty > 0 && nonAtiQty === 0 && atiQty < 35) {
+      return "Minimum order Ati Ampela 35 pasang jika dipesan sendiri (tanpa produk lain).";
+    }
     const otherQty = sumCut(qty.fillet) + sumCut(qty.ceker) + sumCut(qty.ati_ampela);
     if (area === "dekat" && totalEkor < MIN_ORDER.dekat) return `Minimum order untuk luar area dekat adalah ${MIN_ORDER.dekat} ekor.`;
     if (area === "dalam" && totalEkor < MIN_ORDER.dalam && otherQty === 0) return `Minimum order dalam kota ${MIN_ORDER.dalam} ekor.`;

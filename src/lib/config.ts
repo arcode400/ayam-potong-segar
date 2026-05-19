@@ -27,7 +27,7 @@ export const PRODUCTS: {
   { key: "kampung",    name: "Ayam Kampung",  unit: "ekor",   price: 100000, desc: "Ayam kampung asli, gurih & sehat.",                 emoji: "🐓", image: "/images/ayam-kampung.png", hasCutOption: true, weightInfo: "±1 kg/ekor" },
   { key: "kalasan",    name: "Ayam Kalasan",  unit: "ekor",   price: 45000,  desc: "Ayam muda khas kalasan, daging empuk.",             emoji: "🐤", image: "/images/ayam-kalasan.png", hasCutOption: true, weightInfo: "±750 gr/ekor" },
   { key: "fillet",     name: "Fillet Dada",   unit: "kg",     price: 65000,  desc: "Daging dada tanpa tulang.",                         emoji: "🥩", image: "/images/ayam-fillet.png" },
-  { key: "ati_ampela", name: "Ati Ampela",    unit: "pasang", price: 2000,   desc: "Jeroan bersih, dijual per pasang.",                 emoji: "🫀", image: "/images/ati-ampela.png" },
+  { key: "ati_ampela", name: "Ati Ampela",    unit: "pasang", price: 2000,   desc: "Jeroan bersih, dijual per pasang. Min. 35 pasang jika tanpa produk lain.", emoji: "🫀", image: "/images/ati-ampela.png" },
   { key: "ceker",      name: "Ceker",         unit: "kg",     price: 35000,  desc: "Ceker bersih segar.",                               emoji: "🦶", image: "/images/ceker.png", disabled: true },
 ];
 
